@@ -1,0 +1,219 @@
+import { useEffect, useState } from "react"
+import { Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import { Badge } from "@/components/ui/badge"
+
+type Extension = {
+  id: string
+  logo: string
+  name: string
+  description: string
+  isActive: boolean
+}
+
+type FilterType = "all" | "active" | "inactive"
+
+export default function ExtensionsManager() {
+  const [extensions, setExtensions] = useState<Extension[]>([])
+  const [filter, setFilter] = useState<FilterType>("all")
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // 📥 Cargar data del JSON
+  useEffect(() => {
+    fetch("/data.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const withIds = data.map((item: any, index: number) => ({
+          id: `ext-${index}`,
+          ...item,
+        }))
+        setExtensions(withIds)
+      })
+      .catch((err) => console.error("Error loading extensions:", err))
+  }, [])
+
+  const toggleExtension = (id: string) => {
+    setExtensions((prev) =>
+      prev.map((ext) =>
+        ext.id === id ? { ...ext, isActive: !ext.isActive } : ext
+      )
+    )
+  }
+
+  const removeExtension = (id: string) => {
+    setExtensions((prev) => prev.filter((ext) => ext.id !== id))
+  }
+
+  const filteredExtensions = extensions.filter((ext) => {
+    if (filter === "active") return ext.isActive
+    if (filter === "inactive") return !ext.isActive
+    return true
+  })
+
+  const activeCount = extensions.filter((ext) => ext.isActive).length
+  const inactiveCount = extensions.filter((ext) => !ext.isActive).length
+
+  return (
+    <div
+      className={`min-h-screen transition-colors duration-200 ${
+        isDarkMode ? "dark bg-gray-900" : "bg-gray-50"
+      }`}
+    >
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Header */}
+        <div
+          className={`rounded-2xl p-6 mb-8 transition-colors duration-200 ${
+            isDarkMode
+              ? "bg-gray-800 border border-gray-700"
+              : "bg-white border border-gray-200"
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                <div className="w-4 h-4 bg-white rounded-sm"></div>
+              </div>
+              <h1
+                className={`text-2xl font-bold transition-colors duration-200 ${
+                  isDarkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Extensions
+              </h1>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`rounded-full transition-colors duration-200 ${
+                isDarkMode
+                  ? "hover:bg-gray-700 text-gray-300"
+                  : "hover:bg-gray-100 text-gray-600"
+              }`}
+            >
+              {isDarkMode ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </Button>
+          </div>
+        </div>
+
+        {/* Filter Section */}
+        <div className="flex items-center justify-between mb-8 max-md:flex-col max-md:gap-4">
+          <h2
+            className={`text-3xl font-bold transition-colors duration-200 ${
+              isDarkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
+            Extensions List
+          </h2>
+
+          <div
+            className={`flex rounded-lg p-1 transition-colors duration-200 ${
+              isDarkMode
+                ? "bg-gray-800 border border-gray-700"
+                : "bg-white border border-gray-200"
+            }`}
+          >
+            {(["all", "active", "inactive"] as FilterType[]).map((type) => (
+              <Button
+                key={type}
+                variant={filter === type ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setFilter(type)}
+                className={`rounded-md transition-colors duration-200 ${
+                  filter === type
+                    ? "bg-red-500 text-white hover:bg-red-600"
+                    : isDarkMode
+                    ? "text-gray-300 hover:bg-gray-700"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+                {type !== "all" && (
+                  <Badge variant="secondary" className="ml-2 bg-gray-200 text-gray-800">
+                    {type === "active" ? activeCount : inactiveCount}
+                  </Badge>
+                )}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Extensions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredExtensions.map((extension) => (
+            <div
+              key={extension.id}
+              className={`rounded-2xl p-6 transition-all duration-200 hover:shadow-lg ${
+                isDarkMode
+                  ? "bg-gray-800 border border-gray-700 hover:border-gray-600"
+                  : "bg-white border border-gray-200 hover:border-gray-300"
+              }`}
+            >
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
+                  <img
+                    src={extension.logo}
+                    alt={extension.name}
+                    className="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className={`font-semibold text-lg mb-2 transition-colors duration-200 ${
+                      isDarkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {extension.name}
+                  </h3>
+                  <p
+                    className={`text-sm leading-relaxed transition-colors duration-200 ${
+                      isDarkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    {extension.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => removeExtension(extension.id)}
+                  className={`transition-colors duration-200 ${
+                    isDarkMode
+                      ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500"
+                      : "border-gray-300 text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  Remove
+                </Button>
+
+                <Switch
+                  checked={extension.isActive}
+                  onCheckedChange={() => toggleExtension(extension.id)}
+                  className="data-[state=checked]:bg-red-500"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredExtensions.length === 0 && (
+          <div
+            className={`text-center py-12 transition-colors duration-200 ${
+              isDarkMode ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            <p className="text-lg">No extensions found for the selected filter.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
