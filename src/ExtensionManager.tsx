@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from "react"
+import { extensionsData } from "./data/extensionsData";
 
 type Extension = {
   id: string
@@ -19,18 +19,8 @@ export default function ExtensionsManager() {
   const [filter, setFilter] = useState<FilterType>("all")
   const [isDarkMode, setIsDarkMode] = useState(false)
 
-  // 📥 Cargar data del JSON
   useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const withIds = data.map((item: any, index: number) => ({
-          id: `ext-${index}`,
-          ...item,
-        }))
-        setExtensions(withIds)
-      })
-      .catch((err) => console.error("Error loading extensions:", err))
+    setExtensions(extensionsData)
   }, [])
 
   const toggleExtension = (id: string) => {
@@ -63,46 +53,40 @@ export default function ExtensionsManager() {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div
-          className={`rounded-2xl p-6 mb-8 transition-colors duration-200 ${
+          className={`rounded-2xl p-3 mb-8 transition-colors duration-200 ${
             isDarkMode
               ? "bg-gray-800 border border-gray-700"
               : "bg-white border border-gray-200"
           }`}
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
-              </div>
-              <h1
-                className={`text-2xl font-bold transition-colors duration-200 ${
-                  isDarkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Extensions
-              </h1>
+            <div className="flex items-center">
+              <img
+                src="/images/logo.svg"
+                alt="Logo"
+                className={`object-cover ${isDarkMode ? "filter invert" : ""} `}
+              />
             </div>
             <Button
               variant="ghost"
-              size="icon"
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className={`rounded-full transition-colors duration-200 ${
+              className={`p-0 w-12 h-12 rounded-lg cursor-pointer transition-colors duration-200 focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-2 ${
                 isDarkMode
-                  ? "hover:bg-gray-700 text-gray-300"
-                  : "hover:bg-gray-100 text-gray-600"
+                  ? "bg-gray-600 hover:bg-gray-500 active:bg-gray-700 text-gray-300" 
+                  : "bg-gray-100 hover:bg-gray-200 active:bg-gray-200 text-gray-600"
               }`}
             >
               {isDarkMode ? (
-                <Sun className="h-5 w-5" />
+                <img src="/images/icon-sun.svg" alt="sun-icon" />
               ) : (
-                <Moon className="h-5 w-5" />
+                <img src="/images/icon-moon.svg" alt="moon-icon" />
               )}
             </Button>
           </div>
         </div>
 
         {/* Filter Section */}
-        <div className="flex items-center justify-between mb-8 max-md:flex-col max-md:gap-4">
+        <div className="flex items-center justify-between mt-10 mb-8 max-md:flex-col max-md:gap-4">
           <h2
             className={`text-3xl font-bold transition-colors duration-200 ${
               isDarkMode ? "text-white" : "text-gray-900"
@@ -112,11 +96,7 @@ export default function ExtensionsManager() {
           </h2>
 
           <div
-            className={`flex rounded-lg p-1 transition-colors duration-200 ${
-              isDarkMode
-                ? "bg-gray-800 border border-gray-700"
-                : "bg-white border border-gray-200"
-            }`}
+            className="flex gap-2 transition-colors duration-200"
           >
             {(["all", "active", "inactive"] as FilterType[]).map((type) => (
               <Button
@@ -124,17 +104,17 @@ export default function ExtensionsManager() {
                 variant={filter === type ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setFilter(type)}
-                className={`rounded-md transition-colors duration-200 ${
+                className={`transition-colors duration-200 cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 ${
                   filter === type
-                    ? "bg-red-500 text-white hover:bg-red-600"
+                    ? "bg-red-500 text-white hover:bg-red-600 dark:text-gray-800"
                     : isDarkMode
-                    ? "text-gray-300 hover:bg-gray-700"
-                    : "text-gray-600 hover:bg-gray-100"
+                    ? "bg-neutral-600 shadow-sm border border-neutral-400 text-gray-300 hover:bg-neutral-100"
+                    : "bg-white shadow-sm text-gray-600 hover:bg-gray-100"
                 }`}
               >
                 {type.charAt(0).toUpperCase() + type.slice(1)}
                 {type !== "all" && (
-                  <Badge variant="secondary" className="ml-2 bg-gray-200 text-gray-800">
+                  <Badge variant="secondary" className="bg-gray-200 text-gray-800">
                     {type === "active" ? activeCount : inactiveCount}
                   </Badge>
                 )}
@@ -148,7 +128,7 @@ export default function ExtensionsManager() {
           {filteredExtensions.map((extension) => (
             <div
               key={extension.id}
-              className={`rounded-2xl p-6 transition-all duration-200 hover:shadow-lg ${
+              className={`rounded-2xl p-4 transition-all duration-200 hover:shadow-lg ${
                 isDarkMode
                   ? "bg-gray-800 border border-gray-700 hover:border-gray-600"
                   : "bg-white border border-gray-200 hover:border-gray-300"
@@ -159,7 +139,6 @@ export default function ExtensionsManager() {
                   <img
                     src={extension.logo}
                     alt={extension.name}
-                    className="w-6 h-6 object-contain"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -185,7 +164,7 @@ export default function ExtensionsManager() {
                   variant="outline"
                   size="sm"
                   onClick={() => removeExtension(extension.id)}
-                  className={`transition-colors duration-200 ${
+                  className={`transition-colors duration-200 rounded-2xl ${
                     isDarkMode
                       ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500"
                       : "border-gray-300 text-gray-600 hover:bg-gray-50"
