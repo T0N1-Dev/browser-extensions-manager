@@ -68,11 +68,11 @@ export default function ExtensionsManager() {
               />
             </div>
             <Button
-              variant="ghost"
+              // variant="ghost"
               onClick={() => setIsDarkMode(!isDarkMode)}
               className={`p-0 w-12 h-12 rounded-lg cursor-pointer transition-colors duration-200 focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-2 ${
                 isDarkMode
-                  ? "bg-gray-600 hover:bg-gray-500 active:bg-gray-700 text-gray-300" 
+                  ? "bg-gray-600 hover:bg-gray-500 active:bg-gray-500 text-gray-300" 
                   : "bg-gray-100 hover:bg-gray-200 active:bg-gray-200 text-gray-600"
               }`}
             >
@@ -101,14 +101,14 @@ export default function ExtensionsManager() {
             {(["all", "active", "inactive"] as FilterType[]).map((type) => (
               <Button
                 key={type}
-                variant={filter === type ? "default" : "ghost"}
+                // variant={filter === type ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setFilter(type)}
                 className={`transition-colors duration-200 cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 ${
                   filter === type
                     ? "bg-red-500 text-white hover:bg-red-600 dark:text-gray-800"
                     : isDarkMode
-                    ? "bg-neutral-600 shadow-sm border border-neutral-400 text-gray-300 hover:bg-neutral-100"
+                    ? "bg-neutral-600 shadow-sm border border-neutral-400 text-gray-300 hover:bg-neutral-500"
                     : "bg-white shadow-sm text-gray-600 hover:bg-gray-100"
                 }`}
               >
@@ -161,13 +161,12 @@ export default function ExtensionsManager() {
 
               <div className="flex items-center justify-between">
                 <Button
-                  variant="outline"
                   size="sm"
                   onClick={() => removeExtension(extension.id)}
-                  className={`transition-colors duration-200 rounded-2xl ${
+                  className={`transition-colors duration-200 bg-transparent rounded-2xl cursor-pointer hover:bg-red-600 ${
                     isDarkMode
-                      ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500"
-                      : "border-gray-300 text-gray-600 hover:bg-gray-50"
+                      ? "border border-gray-600 text-gray-100 hover:text-gray-800"
+                      : "border border-gray-300 text-gray-800 hover:text-gray-100"
                   }`}
                 >
                   Remove
