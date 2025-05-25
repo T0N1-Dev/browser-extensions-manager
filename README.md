@@ -1,88 +1,73 @@
-# Frontend Mentor - Browser extensions manager UI solution
+# Browser Extensions Manager UI
 
-This is a solution to the [Browser extensions manager UI challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/browser-extension-manager-ui-yNZnOfsMAp). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This project is a solution to the [Browser extensions manager UI challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/browser-extension-manager-ui-yNZnOfsMAp). It allows users to manage browser extensions with a modern, responsive interface.
 
-## Table of contents
-
+## Table of Contents
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
+- [Features](#features)
+- [Screenshot](#screenshot)
+- [Demo](#demo)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+- [What I Learned](#what-i-learned)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
-### The challenge
+A web app for managing browser extensions. Users can toggle extensions on/off, filter by status, remove extensions, and switch between light/dark themes. The UI is responsive and accessible, with clear focus and hover states.
 
-Users should be able to:
+## Features
 
 - Toggle extensions between active and inactive states
-- Filter active and inactive extensions
+- Filter extensions by active/inactive/all
 - Remove extensions from the list
-- Select their color theme
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+- Select between light and dark color themes
+- Responsive layout for all device sizes
+- Accessible focus and hover states for all interactive elements
 
-### Screenshot
+## Screenshot
 
-![](./screenshot.jpg)
+![Screenshot of the Browser Extensions Manager UI](https://res.cloudinary.com/dmfs1od9n/image/upload/v1748212994/desktop-design-light_n56qhf.jpg)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
+## Demo
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
+- Live Site URL: [https://browser-extensions-manager-six.vercel.app/](https://browser-extensions-manager-six.vercel.app/)
 
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
-
-### Links
-
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
-
-## My process
-
-### Built with
+## Built With
 
 - Semantic HTML5 markup
 - CSS custom properties
-- Flexbox
-- CSS Grid
+- Flexbox & CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- [Shadcn](https://ui.shadcn.com/)
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+## Getting Started
 
-### What I learned
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+4. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+## What I Learned
 
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
+- Managing global state in React using context (for dark mode and filtering)
+- Building accessible, responsive UIs with Tailwind CSS and Shadcn
+- Structuring a React project for scalability
+- Implementing filter and toggle logic for UI elements
 
 ## Author
 
-- Website - [T0N1](https://t0n1-dev.github.io/MyPortfolio/)
+- Website: [T0N1](https://t0n1-dev.github.io/MyPortfolio/)
