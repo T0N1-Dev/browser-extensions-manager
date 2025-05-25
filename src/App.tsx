@@ -1,8 +1,14 @@
-import ExtensionsManager from "./ExtensionManager"
+import ExtensionsManager from "./components/main/ExtensionManager"
+import { DarkModeProvider } from "@/context/DarkMode"
+import { FilterProvider } from "@/context/Filter"
 
 function App() {
   return (
-    <ExtensionsManager />
+    <DarkModeProvider>
+      <FilterProvider>
+        <ExtensionsManager />
+      </FilterProvider>
+    </DarkModeProvider>
   )
 }
 
