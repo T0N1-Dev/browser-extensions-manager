@@ -31,7 +31,7 @@ A web app for managing browser extensions. Users can toggle extensions on/off, f
 
 ## Demo
 
-- Live Site URL: [https://browser-extensions-manager-six.vercel.app/](https://browser-extensions-manager-six.vercel.app/)
+- Live Site URL: [Demo-Online](https://browser-extensions-manager-six.vercel.app/)
 
 ## Built With
 
