@@ -2,14 +2,15 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import type { Extension } from "@/interfaces/extensionsInterface";
 import type { FilterType } from "@/interfaces/filterType";
-import { useFilter } from "@/context/Filter";
+import { useFilterState, useFilterDispatch } from "@/context/Filter/filter.hooks";
 
 type FilterSectionProps = {
   extensionsProp: Extension[];
 };
 
 export const FilterSection = ({extensionsProp}: FilterSectionProps) => {
-    const { filter, setFilter } = useFilter();
+    const { filter } = useFilterState();
+    const dispatch = useFilterDispatch();
 
     const activeCount = extensionsProp.filter((ext) => ext.isActive).length
     const inactiveCount = extensionsProp.filter((ext) => !ext.isActive).length
@@ -29,7 +30,7 @@ export const FilterSection = ({extensionsProp}: FilterSectionProps) => {
             <Button
             key={type}
             size="sm"
-            onClick={() => setFilter(type)}
+            onClick={() => dispatch({ type: "SET_FILTER", payload: type })}
             className={`transition-colors duration-200 cursor-pointer rounded-2xl bg-white shadow-sm text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-2 dark:bg-neutral-600 dark:shadow-sm dark:border dark:border-neutral-400 dark:text-gray-300 dark:hover:bg-neutral-500 ${
                 filter === type
                 && "bg-red-500 text-white hover:bg-red-600 dark:bg-gray-900 dark:text-gray-200"

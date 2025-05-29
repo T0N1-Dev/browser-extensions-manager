@@ -1,5 +1,5 @@
 import ExtensionsManager from "./components/main/ExtensionManager"
-import { FilterProvider } from "@/context/Filter"
+import { FilterProvider } from "@/context/Filter/filter.context"
 
 function App() {
   return (

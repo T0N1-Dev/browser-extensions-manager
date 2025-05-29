@@ -1,6 +1,6 @@
 import { Button } from "../ui/button"
 import { Switch } from "../ui/switch"
-import { useFilter } from "@/context/Filter";
+import { useFilterState } from "@/context/Filter/filter.hooks";
 import type { Extension } from "@/interfaces/extensionsInterface";
 
 type ExtensionsGridProps = {
@@ -9,14 +9,12 @@ type ExtensionsGridProps = {
 };
 
 export const ExtensionsGrid = ({ extensions, setExtensions }: ExtensionsGridProps) => {
-    const { filter } = useFilter();
+    const { filter } = useFilterState();
 
     const toggleExtension = (id: string) => {
         setExtensions((prev) =>
-        prev.map((ext) =>
-            ext.id === id ? { ...ext, isActive: !ext.isActive } : ext
-        )
-        )
+            prev.map( (ext) => ext.id === id ? { ...ext, isActive: !ext.isActive } : ext )
+        );
     }
 
     const removeExtension = (id: string) => {
